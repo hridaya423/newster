@@ -11,33 +11,39 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  const [error, setError] = useState<string | null>(null);
+
   const loadNews = async (pageNum: number, isNewCategory: boolean = false) => {
     try {
       setLoading(true);
+      setError(null);
       const data = await fetchTopHeadlines(category, pageNum);
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
       
       setNews(prev => ({
         ...data,
         articles: isNewCategory ? data.articles : [...prev.articles, ...data.articles]
       }));
       
-      // Check if we've reached the end of available articles
       setHasMore(data.articles.length > 0);
     } catch (error) {
       console.error('Error loading news:', error);
+      setError(error instanceof Error ? error.message : 'Failed to load news');
+      setHasMore(false);
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle category change
   const handleCategoryChange = (newCategory: string) => {
     setCategory(newCategory);
     setPage(1);
     setHasMore(true);
   };
 
-  // Infinite scroll handler
   const handleScroll = useCallback(() => {
     if (loading || !hasMore) return;
 
@@ -49,19 +55,16 @@ export default function Dashboard() {
     }
   }, [loading, hasMore]);
 
-  // Initial load and category change
   useEffect(() => {
     loadNews(1, true);
   }, [category]);
 
-  // Load more on page change
   useEffect(() => {
     if (page > 1) {
       loadNews(page, false);
     }
   }, [page]);
 
-  // Add scroll listener
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -74,7 +77,13 @@ export default function Dashboard() {
           Latest News
         </h1>
         <NewsTabs onCategoryChange={handleCategoryChange} />
-        <NewsGrid articles={news.articles} />
+        {error ? (
+          <div className="text-center py-4 text-red-600">
+            {error}
+          </div>
+        ) : (
+          <NewsGrid articles={news.articles} />
+        )}
         {loading && (
           <div className="text-center py-4">
             <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" />
