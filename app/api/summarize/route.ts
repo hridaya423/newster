@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { generateSummary } from '@/lib/groq';
 
 export async function POST(request: Request) {

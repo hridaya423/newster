@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NewsCard } from "./NewsCard";
 import { motion } from 'framer-motion';
 
