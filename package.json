@@ -14,7 +14,7 @@
     "newsapi": "^2.4.1",
     "next": "15.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "^19.2.1",
     "readme-scaffolder": "^1.0.1"
   },
   "devDependencies": {
