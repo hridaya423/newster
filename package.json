@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "framer-motion": "^12.23.25",
-    "groq-sdk": "^0.12.0",
+    "groq-sdk": "^0.37.0",
     "newsapi": "^2.4.1",
     "next": "16.0.7",
     "react": "^19.0.0",
