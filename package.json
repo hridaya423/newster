@@ -12,7 +12,7 @@
     "framer-motion": "^12.23.26",
     "groq-sdk": "^0.37.0",
     "newsapi": "^2.4.1",
-    "next": "16.1.0",
+    "next": "16.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.2.3",
     "readme-scaffolder": "^1.0.1"
